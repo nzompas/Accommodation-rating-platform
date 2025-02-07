@@ -1,0 +1,280 @@
+package gui;
+
+import api.Rating;
+import api.User;
+import api.accommodation;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class dashboardU implements ActionListener {
+    public accommodation Accom = new accommodation(1);
+    public JLabel label = new JLabel();
+    public JLabel epiloges=new JLabel();
+    public JRadioButton epexergasia;
+    public JRadioButton diagrafi;
+    public JLabel addressa = new JLabel();
+    public JLabel typea = new JLabel();
+    public JLabel namea = new JLabel();
+    public JLabel areaa = new JLabel();
+    public JLabel postcodesa = new JLabel();
+    public JButton b1=new JButton();
+    public accommodation accommod=new accommodation(1);
+    public JLabel aR=new JLabel();
+    public String nameU;
+    public Rating rat=new Rating(1);
+    public JLabel flname=new JLabel();
+    public JLabel tR=new JLabel();
+    public String nameAA;
+    public JLabel descriptiona = new JLabel();
+    public JLabel viewa = new JLabel();
+    public JLabel wca = new JLabel();
+    public JLabel clothWasha = new JLabel();
+    public JLabel funa = new JLabel();
+    public JLabel heatinga = new JLabel();
+    public JLabel interneta = new JLabel();
+    public JLabel kitchena = new JLabel();
+    public JLabel outSpacea = new JLabel();
+    public JLabel parkinga = new JLabel();
+    JFrame frame1=new JFrame("Πλατφόρμα αξιολόγησης καταλυμάτων");
+public User us=new User();
+    public dashboardU(String n) throws IOException {
+        nameU = n;
+        showdash();
+    }
+
+    public void showdash() {
+        JFrame frame = new JFrame("Πλατφόρμα αξιολόγησης καταλυμάτων");
+        frame.setVisible(true);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+        JButton aposindesi = new JButton("Αποσύνδεση");
+        aposindesi.setBounds(5, 500, 130, 30);
+        frame.add(aposindesi);
+        aposindesi.addActionListener(new ActionListener() {
+                                         public void actionPerformed(ActionEvent e) {
+                                             frame.dispose();
+                                             try {
+                                                 new Jframe();
+                                             } catch (IOException ex) {
+                                                 throw new RuntimeException(ex);
+                                             }
+                                         }
+                                     }
+        );
+        int i = us.findpr(nameU);
+        String fln = (us.fnamep.get(i) + " " + us.lnamep.get(i) + ",");
+        flname.setText(fln);
+        flname.setBounds(10, 30, 300, 30);
+        String ar = "Ο μέσος όρος της βαθμολογίας που έχετε δώσει συνολικά στα καταλύματα που έχετε αξιολογήσει είναι " +  rat.Uaccomm(nameU);
+        aR.setText(ar);
+        aR.setBounds(10, 60, 600, 30);
+        String tr="Tα καταλύματα που έχετε αξιολογήσει είναι: ";
+        JLabel lb=new JLabel("Επιλέξτε ένα για να δείτε την αξιολόγηση του.");
+        lb.setBounds(10,110,600,30);
+        tR.setText(tr);
+        tR.setBounds(10,90,600,30);
+        ArrayList<String> aUr=new ArrayList<>();
+        aUr=rat.Arat(nameU);
+        final JLabel label = new JLabel();
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setSize(400,100);
+        JButton b=new JButton("Επιλογή");
+        b.setBounds(170,160,100,20);
+        final JComboBox cb=new JComboBox(aUr.toArray());
+        cb.setBounds(10, 160,160,20);
+        frame.add(flname);frame.add(aR);frame.add(tR);frame.add(lb);
+        frame.add(b);frame.add(cb);frame.add(label);
+        frame.setLayout(null);
+        b.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                nameAA=String.valueOf(cb.getItemAt(cb.getSelectedIndex()));
+                int i = accommod.findAcc(String.valueOf(cb.getItemAt(cb.getSelectedIndex())));
+                showRat(String.valueOf(cb.getItemAt(cb.getSelectedIndex())),i);
+            }
+        });
+    }
+    public void showRat(String accomm,int i){
+        label.setText("Στοιχεία καταλύματος:");
+        frame1.setVisible(true);
+        frame1.setSize(800, 800);
+        frame1.setLocationRelativeTo(null);
+        frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame1.setLayout(null);
+        JButton aposindesi=new JButton("Αποσύνδεση");
+        aposindesi.setBounds(5,600,130,30);
+        frame1.add(aposindesi);
+        aposindesi.addActionListener(new ActionListener() {
+                                         public void actionPerformed(ActionEvent e) {
+                                             frame1.dispose();
+                                             try {
+                                                 new Jframe();
+                                             } catch (IOException ex) {
+                                                 throw new RuntimeException(ex);
+                                             }
+                                         }
+                                     }
+        );
+        label.setBounds(310,-20,350,100);
+        JLabel nameA=new JLabel("Όνομα:");
+        nameA.setBounds(10,20,350,100);
+        namea.setBounds(60,55,700,30);
+        namea.setText(Accom.name.namesA.get(i));
+        JLabel typeA=new JLabel("Τύπος:");
+        typeA.setBounds(10,40,350,100);
+        typea.setBounds(60,75,700,30);
+        typea.setText(Accom.type.typeA.get(i));
+        JLabel addressA=new JLabel("Διεύθυνση:");
+        addressA.setBounds(10,60,350,100);
+        addressa.setBounds(90,95,700,30);
+        addressa.setText(Accom.address.addressA.get(i));
+        JLabel areaA=new JLabel("Πόλη:");
+        areaA.setBounds(10,80,350,100);
+        areaa.setBounds(60,115,700,30);
+        areaa.setText(Accom.area.areaA.get(i));
+        JLabel postcodesA=new JLabel("Ταχυδρομικός Κώδικας:");
+        postcodesA.setBounds(10,100,350,100);
+        postcodesa.setBounds(160,135,700,30);
+        postcodesa.setText(Accom.postcodes.postcodesA.get(i));
+        JLabel descriptionA=new JLabel("Περιγραφή:");
+        descriptionA.setBounds(10,120,350,100);
+        descriptiona.setBounds(90,155,900,30);
+        descriptiona.setText(Accom.description.descriptionA.get(i));
+        JLabel viewA=new JLabel("Θέα:");
+        viewA.setBounds(10,140,350,100);
+        viewa.setBounds(50,175,700,30);
+        if(Accom.view.viewA.get(i).equals("Null")){
+            viewa.setText("-");
+        }
+        else{
+            viewa.setText(Accom.view.viewA.get(i));
+        }
+        JLabel wcA=new JLabel("Μπάνιο:");
+        wcA.setBounds(10,160,350,100);
+        wca.setBounds(70,195,700,30);
+        if(Accom.wc.wcA.get(i).equals("Null")){
+            wca.setText("-");
+        }
+        else{
+            wca.setText(Accom.wc.wcA.get(i));
+        }
+        JLabel clothWashA=new JLabel("Πλύσιμο ρούχων:");
+        clothWashA.setBounds(10,180,350,100);
+        clothWasha.setBounds(120,215,700,30);
+        if(Accom.washing.clothwashA.get(i).equals("Null")){
+            clothWasha.setText("-");
+        }
+        else{
+            clothWasha.setText(Accom.washing.clothwashA.get(i));
+        }
+        JLabel funA=new JLabel("Ψυχαγωγία:");
+        funA.setBounds(10,200,350,100);
+        funa.setBounds(90,235,700,30);
+        if(Accom.fun.funA.get(i).equals("Null")){
+            funa.setText("-");
+        }
+        else{
+            funa.setText(Accom.fun.funA.get(i));
+        }
+        JLabel heatingA=new JLabel("Θέρμανση και κλιματισμός:");
+        heatingA.setBounds(10,220,350,100);
+        heatinga.setBounds(170,255,700,30);
+        if(Accom.heat.heatingA.get(i).equals("Null")){
+            heatinga.setText("-");
+        }
+        else{
+            heatinga.setText(Accom.heat.heatingA.get(i));
+        }
+        JLabel internetA=new JLabel("Διαδίκτυο:");
+        internetA.setBounds(10,240,350,100);
+        interneta.setBounds(80,275,700,30);
+        if(Accom.internet.internetA.get(i).equals("Null")){
+            interneta.setText("-");
+        }
+        else{
+            interneta.setText(Accom.internet.internetA.get(i));
+        }
+        JLabel kitchenA=new JLabel("Κουζίνα και τραπεζαρία:");
+        kitchenA.setBounds(10,260,350,100);
+        kitchena.setBounds(160,295,700,30);
+        if(Accom.kitchen.kitchenA.get(i).equals("Null")){
+            kitchena.setText("-");
+        }
+        else{
+            kitchena.setText(Accom.kitchen.kitchenA.get(i));
+        }
+        JLabel outSpaceA=new JLabel("Εξωτερικός χώρος:");
+        outSpaceA.setBounds(10,280,350,100);
+        outSpacea.setBounds(135,315,700,30);
+        if(Accom.outsp.outspA.get(i).equals("Null")){
+            outSpacea.setText("-");
+        }
+        else{
+            outSpacea.setText(Accom.outsp.outspA.get(i));
+        }
+        JLabel parkingA=new JLabel("Χώρος στάθμευσης:");
+        parkingA.setBounds(10,300,350,100);
+        parkinga.setBounds(135,335,700,30);
+        if(Accom.parking.parkingA.get(i).equals("Null")){
+            parkinga.setText("-");
+        }
+        else{
+            parkinga.setText(Accom.parking.parkingA.get(i));
+        }
+        String b="Ο βαθμός αξιολόγησης που έχετε δώσει σε αυτό το κατάλυμα είναι "+rat.ratAccom(Accom.name.namesA.get(i),nameU);
+        JLabel bath=new JLabel(b);
+        bath.setBounds(10,380,600,30);
+        epiloges.setText("Επιλογές:");
+        epiloges.setBounds(10,415,700,30);
+        epexergasia = new JRadioButton("Επεξεργασία αξιολόγησης");
+        epexergasia.setBounds(10,445,700,30);
+        diagrafi = new JRadioButton("Διαγραφή αξιολόγησης");
+        diagrafi.setBounds(10,470,700,30);
+        JButton b1;
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(epexergasia);
+        bg.add(diagrafi);
+        b1 = new JButton("Επιλογή");
+        b1.setBounds(90, 500, 100, 30);
+        b1.addActionListener(this);
+        frame1.add(b1);
+        frame1.add(label);frame1.add(nameA);frame1.add(typeA);frame1.add(bath);
+        frame1.add(addressA);frame1.add(areaA);frame1.add(postcodesA);frame1.add(namea);
+        frame1.add(typea);frame1.add(addressa);frame1.add(areaa);frame1.add(postcodesa);
+        frame1.add(descriptionA);frame1.add(viewA);frame1.add(wcA);frame1.add(clothWashA);
+        frame1.add(funA);frame1.add(heatingA);frame1.add(internetA);frame1.add(kitchenA);
+        frame1.add(outSpaceA);frame1.add(parkingA);frame1.add(descriptiona);frame1.add(viewa);
+        frame1.add(wca);frame1.add(clothWasha);frame1.add(funa);frame1.add(heatinga);
+        frame1.add(interneta);frame1.add(kitchena);frame1.add(outSpacea);frame1.add(parkinga);
+        frame1.add(epiloges);frame1.add(epexergasia);frame1.add(diagrafi);
+    }
+
+
+    public void actionPerformed(ActionEvent e) {
+        int i = rat.findRat(nameU, nameAA);
+        if(epexergasia.isSelected()){//Επεξεργασία καταχώρησης
+            frame1.dispose();
+            try {
+               processRat pcr= new processRat(nameU,1);
+               pcr.procesRat(i);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        else if(diagrafi.isSelected()){//Διαγραφή καταχώρησης
+            frame1.dispose();
+            try {
+               deleteRat dlt= new deleteRat(nameU,0);
+               dlt.rat.deleterat(i);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+}
